@@ -93,6 +93,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Utility\src\Utility\Utility.csproj">
+      <Project>{D473AC8E-F63C-49A3-BD08-5561C19B8B14}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Chess.Player\Chess.Player.csproj">
       <Project>{EE8F596F-A1EA-4240-BF28-46821DFE78AF}</Project>
       <Name>Chess.Player</Name>
