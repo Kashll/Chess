@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using Chess.Player.Board;
-using Chess.Player.Pieces;
 using Utility;
-using Color = Chess.Player.Color;
 
 namespace Chess.UI.Converters
 {
@@ -24,9 +23,7 @@ namespace Chess.UI.Converters
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			Uri uri = (Uri) value;
-
-			return new Pawn(Color.White);
+			return DependencyProperty.UnsetValue;
 		}
 	}
 }
