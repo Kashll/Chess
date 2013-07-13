@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
+using Chess.UI.ViewModel;
 
 namespace Chess.UI
 {
@@ -12,5 +8,20 @@ namespace Chess.UI
     /// </summary>
     public partial class App : Application
     {
+	    public MainWindowViewModel MainWindowViewModel
+	    {
+			get { return m_mainWindowViewModel; }
+	    }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+			MainWindow mainWindow = new MainWindow();
+            m_mainWindowViewModel = new MainWindowViewModel();
+	        m_mainWindowViewModel = (MainWindowViewModel) mainWindow.DataContext;
+
+			mainWindow.Show();
+        }
+
+        MainWindowViewModel m_mainWindowViewModel;
     }
 }
