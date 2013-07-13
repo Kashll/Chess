@@ -13,14 +13,14 @@ namespace Chess.UI.Converters
 		{
 			Color color = (Color) value;
 
-			return color == Color.Black ? Brushes.Black : Brushes.White;
+			return color == Color.Black ? Brushes.SaddleBrown : Brushes.SandyBrown;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			Brush brush = (Brush) value;
 
-			return brush.Equals(Brushes.Black) ? Color.Black : Color.White;
+			return brush.Equals(Brushes.SaddleBrown) ? Color.Black : Color.White;
 		}
 	}
 }

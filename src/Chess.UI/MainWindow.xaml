@@ -11,10 +11,11 @@
 	</Window.DataContext>
 	<Window.Resources>
 		<converters:ColorConverter x:Key="ColorConverter" />
+		<converters:PieceImageConverter x:Key="PieceImageConverter" />
 		<DataTemplate DataType="{x:Type board:Square}">
 			<Grid>
 				<Rectangle Fill="{Binding Color, Converter={StaticResource ColorConverter}, Mode=OneTime}" />
-				<TextBlock Text="{Binding Piece.Type}" Foreground="{Binding Piece.Color, Converter={StaticResource ColorConverter}}" />
+				<Image Source="{Binding ., Converter={StaticResource PieceImageConverter}}" />
 			</Grid>
 		</DataTemplate>
 	</Window.Resources>
