@@ -1,11 +1,11 @@
 ﻿namespace Chess.Player
 {
-    public enum MoveType
-    {
-        Standard,
-        Promotion,
-        EnPassant,
-        CastleKingside,
-        CastleQueenside
-    }
+	public enum MoveType
+	{
+		Standard,
+		Promotion,
+		EnPassant,
+		CastleKingside,
+		CastleQueenside
+	}
 }
