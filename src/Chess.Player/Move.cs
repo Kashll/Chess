@@ -1,5 +1,7 @@
 ﻿using System;
 using Chess.Player.Board;
+using Chess.Player.Pieces;
+using Utility;
 
 namespace Chess.Player
 {
@@ -49,6 +51,35 @@ namespace Chess.Player
 		public PieceType PromoteTo
 		{
 			get { return m_promoteTo; }
+		}
+
+		public string ToString(Square[,] board)
+		{
+			if (m_moveType == MoveType.CastleKingside)
+				return "0-0";
+
+			if (m_moveType == MoveType.CastleQueenside)
+				return "0-0-0";
+
+			Piece piece = board[m_from.BoardRow(), m_from.BoardColumn()].Piece;
+			bool isCapture = board[m_to.BoardRow(), m_to.BoardColumn()].HasPiece;
+
+			string promotionType = m_moveType == MoveType.Promotion ? m_promoteTo.ToString() : "";
+			string pieceContext = "";
+			if (piece.Type == PieceType.Knight || piece.Type == PieceType.Rook)
+			{
+				// may need to append file or rank info
+				int count = 0;
+				for (int i = 0; i < 8; i++)
+				{
+					if (board[m_from.BoardRow(), i].HasPiece && board[m_from.BoardRow(), i].Piece.Type == piece.Type && board[m_from.BoardRow(), i].Piece.Color == piece.Color)
+						count++;
+				}
+
+				pieceContext = count <= 2 ? m_from.File.ToString() : m_from.Rank.ToString();
+			}
+
+			return "{0}{1}{2}{3}{4}{5}".FormatInvariant(piece, pieceContext, isCapture ? "x" : "", m_to.File.ToString().ToLowerInvariant(), m_to.Rank, promotionType);
 		}
 
 		readonly MoveType m_moveType;

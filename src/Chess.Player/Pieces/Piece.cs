@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Chess.Player.Board;
 
@@ -23,6 +24,27 @@ namespace Chess.Player.Pieces
 		}
 
 		public abstract ReadOnlyCollection<Move> GenerateMoves(int row, int column, Square[,] board);
+
+		public override string ToString()
+		{
+			switch (m_type)
+			{
+			case PieceType.King:
+				return "K";
+			case PieceType.Queen:
+				return "Q";
+			case PieceType.Rook:
+				return "R";
+			case PieceType.Bishop:
+				return "B";
+			case PieceType.Knight:
+				return "N";
+			case PieceType.Pawn:
+				return "";
+			default:
+				throw new ArgumentOutOfRangeException();
+			}
+		}
 
 		protected ReadOnlyCollection<Move> Scan(int xDirection, int yDirection, int row, int column, Square[,] board)
 		{
