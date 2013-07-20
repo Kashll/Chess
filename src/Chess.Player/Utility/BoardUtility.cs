@@ -59,5 +59,25 @@ namespace Chess.Player.Utility
 
 			return board;
 		}
+
+		public static int ToRank(this int row)
+		{
+			return row + 1;
+		}
+
+		public static File ToFile(this int column)
+		{
+			return (File) column;
+		}
+
+		public static int ToRow(this int rank)
+		{
+			return rank - 1;
+		}
+
+		public static int ToColumn(this File file)
+		{
+			return (int) file;
+		}
 	}
 }

@@ -1,4 +1,6 @@
-﻿using Chess.Player.Pieces;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Chess.Player.Pieces;
 
 namespace Chess.Player.Board
 {
@@ -29,6 +31,16 @@ namespace Chess.Player.Board
 		{
 			get { return m_piece; }
 			set { m_piece = value; }
+		}
+
+		public ReadOnlyCollection<Move> GenerateMoves(Color onMove, int row, int column, Square[,] board)
+		{
+			List<Move> moves = new List<Move>();
+
+			if (HasPiece && onMove == Piece.Color)
+				moves.AddRange(Piece.GenerateMoves(row, column, board));
+
+			return moves.AsReadOnly();
 		}
 
 		readonly Color m_color;

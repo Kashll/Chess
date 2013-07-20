@@ -3,6 +3,7 @@
 	public enum MoveType
 	{
 		Standard,
+		PawnStart,
 		Promotion,
 		EnPassant,
 		CastleKingside,

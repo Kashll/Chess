@@ -1,4 +1,6 @@
-﻿using Chess.Player.Board;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Chess.Player.Board;
 using Chess.Player.Utility;
 using Utility;
 
@@ -41,6 +43,19 @@ namespace Chess.Player
 			{
 				SetPropertyField(BoardProperty, value, ref m_board);
 			}
+		}
+
+		public ReadOnlyCollection<Move> GenerateMoves()
+		{
+			List<Move> moves = new List<Move>();
+
+			for (int i = 0; i < 8; i++)
+			{
+				for (int j = 0; j < 8; j++)
+					moves.AddRange(m_board[i, j].GenerateMoves(m_playerTurn, i, j, m_board));
+			}
+
+			return moves.AsReadOnly();
 		}
 
 		Color m_playerTurn;

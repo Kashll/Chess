@@ -1,4 +1,7 @@
-﻿namespace Chess.Player.Pieces
+﻿using System.Collections.ObjectModel;
+using Chess.Player.Board;
+
+namespace Chess.Player.Pieces
 {
 	public abstract class Piece
 	{
@@ -17,6 +20,8 @@
 		{
 			get { return m_type; }
 		}
+
+		public abstract ReadOnlyCollection<Move> GenerateMoves(int row, int column, Square[,] board);
 
 		readonly Color m_color;
 		readonly PieceType m_type;

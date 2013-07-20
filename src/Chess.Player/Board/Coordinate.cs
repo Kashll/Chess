@@ -1,4 +1,5 @@
 ﻿using System;
+using Chess.Player.Utility;
 
 namespace Chess.Player.Board
 {
@@ -13,6 +14,15 @@ namespace Chess.Player.Board
 			m_rank = rank;
 		}
 
+		public Coordinate(int row, int column)
+		{
+			if (row < 0 || row > 7 || column < 0 || column > 7)
+				throw new ArgumentException("coordinate out of board range");
+
+			m_file = column.ToFile();
+			m_rank = column.ToRank();
+		}
+
 		public File File
 		{
 			get { return m_file; }
@@ -25,12 +35,12 @@ namespace Chess.Player.Board
 
 		public int BoardRow()
 		{
-			return m_rank - 1;
+			return m_rank.ToRow();
 		}
 
 		public int BoardColumn()
 		{
-			return (int) m_file;
+			return m_file.ToColumn();
 		}
 
 		readonly File m_file;
