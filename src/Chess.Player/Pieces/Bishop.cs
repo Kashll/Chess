@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Chess.Player.Board;
 
 namespace Chess.Player.Pieces
@@ -12,7 +13,13 @@ namespace Chess.Player.Pieces
 
 		public override ReadOnlyCollection<Move> GenerateMoves(int row, int column, Square[,] board)
 		{
-			throw new System.NotImplementedException();
+			List<Move> moves = new List<Move>();
+			moves.AddRange(Scan(-1, 1, row, column, board));
+			moves.AddRange(Scan(1, 1, row, column, board));
+			moves.AddRange(Scan(1,- 1, row, column, board));
+			moves.AddRange(Scan(-1, -1, row, column, board));
+
+			return moves.AsReadOnly();
 		}
 	}
 }
