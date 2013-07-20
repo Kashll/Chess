@@ -14,13 +14,13 @@ namespace Chess.Player.Board
 			m_rank = rank;
 		}
 
-		public Coordinate(int row, int column)
+		public Coordinate(int column, int row)
 		{
 			if (row < 0 || row > 7 || column < 0 || column > 7)
 				throw new ArgumentException("coordinate out of board range");
 
 			m_file = column.ToFile();
-			m_rank = column.ToRank();
+			m_rank = row.ToRank();
 		}
 
 		public File File
