@@ -35,10 +35,10 @@ namespace Chess.Player.Pieces
 
 			while (!finished)
 			{
-				newRow += xDirection;
-				newColumn += yDirection;
+				newRow += yDirection;
+				newColumn += xDirection;
 
-				if (newRow > 0 && newRow < 8 && newColumn > 0 && newColumn < 8)
+				if (newRow >= 0 && newRow <= 7 && newColumn >= 0 && newColumn <= 7)
 				{
 					Coordinate to = new Coordinate(newColumn, newRow);
 					Move move = new Move(MoveType.Standard, from, to);

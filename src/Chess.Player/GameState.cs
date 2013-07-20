@@ -84,12 +84,12 @@ namespace Chess.Player
 
 					// left
 					int leftColumn = m_enPassantColumn.Value - 1;
-					if (leftColumn > 0 && m_board[row, leftColumn].HasPiece && m_board[row, leftColumn].Piece.Color == Color.White && m_board[row, leftColumn].Piece.Type == PieceType.Pawn)
+					if (leftColumn >= 0 && m_board[row, leftColumn].HasPiece && m_board[row, leftColumn].Piece.Color == Color.White && m_board[row, leftColumn].Piece.Type == PieceType.Pawn)
 						moves.Add(new Move(MoveType.EnPassant, new Coordinate(leftColumn, row), new Coordinate(m_enPassantColumn.Value, row + 1)));
 
 					// right
 					int rightColumn = m_enPassantColumn.Value + 1;
-					if (rightColumn > 0 && m_board[row, rightColumn].HasPiece && m_board[row, rightColumn].Piece.Color == Color.White && m_board[row, rightColumn].Piece.Type == PieceType.Pawn)
+					if (rightColumn <= 7 && m_board[row, rightColumn].HasPiece && m_board[row, rightColumn].Piece.Color == Color.White && m_board[row, rightColumn].Piece.Type == PieceType.Pawn)
 						moves.Add(new Move(MoveType.EnPassant, new Coordinate(rightColumn, row), new Coordinate(m_enPassantColumn.Value, row + 1)));
 				}
 				else if (m_playerTurn == Color.Black)
@@ -98,12 +98,12 @@ namespace Chess.Player
 
 					// left
 					int leftColumn = m_enPassantColumn.Value - 1;
-					if (leftColumn > 0 && m_board[row, leftColumn].HasPiece && m_board[row, leftColumn].Piece.Color == Color.Black && m_board[row, leftColumn].Piece.Type == PieceType.Pawn)
+					if (leftColumn >= 0 && m_board[row, leftColumn].HasPiece && m_board[row, leftColumn].Piece.Color == Color.Black && m_board[row, leftColumn].Piece.Type == PieceType.Pawn)
 						moves.Add(new Move(MoveType.EnPassant, new Coordinate(leftColumn, row), new Coordinate(m_enPassantColumn.Value, row - 1)));
 
 					// right
 					int rightColumn = m_enPassantColumn.Value + 1;
-					if (rightColumn > 0 && m_board[row, rightColumn].HasPiece && m_board[row, rightColumn].Piece.Color == Color.Black && m_board[row, rightColumn].Piece.Type == PieceType.Pawn)
+					if (rightColumn <= 7 && m_board[row, rightColumn].HasPiece && m_board[row, rightColumn].Piece.Color == Color.Black && m_board[row, rightColumn].Piece.Type == PieceType.Pawn)
 						moves.Add(new Move(MoveType.EnPassant, new Coordinate(rightColumn, row), new Coordinate(m_enPassantColumn.Value, row - 1)));
 				}
 			}
