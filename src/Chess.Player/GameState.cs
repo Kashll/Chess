@@ -81,7 +81,7 @@ namespace Chess.Player
 					m_whiteQueenRookMoved |= pieceToMove.Color == Color.White && move.From.BoardRow() == 0 && move.From.BoardColumn() == 0;
 					m_whiteKingRookMoved |= pieceToMove.Color == Color.White && move.From.BoardRow() == 0 && move.From.BoardColumn() == 7;
 					m_blackQueenRookMoved |= pieceToMove.Color == Color.Black && move.From.BoardRow() == 7 && move.From.BoardColumn() == 0;
-					m_blackKingRookMoved |= pieceToMove.Color == Color.Black && move.From.BoardRow() == 7 && move.From.BoardColumn() == 7;		
+					m_blackKingRookMoved |= pieceToMove.Color == Color.Black && move.From.BoardRow() == 7 && move.From.BoardColumn() == 7;
 				}
 
 				break;
@@ -180,33 +180,39 @@ namespace Chess.Player
 			}
 
 			// castling
-			List<Move> opponentBasicMoves = new List<Move>();
-			for (int i = 0; i < 8; i++)
+			bool checkforCastling = (m_playerTurn == Color.White && !m_whiteKingMoved && (!m_whiteKingRookMoved || !m_whiteQueenRookMoved)) ||
+												m_playerTurn == Color.Black && !m_blackKingMoved && (!m_blackKingRookMoved || !m_blackQueenRookMoved);
+
+			if (checkforCastling)
 			{
-				for (int j = 0; j < 8; j++)
-					opponentBasicMoves.AddRange(m_board[i, j].GenerateMoves(m_playerTurn == Color.White ? Color.Black : Color.White, i, j, m_board));
-			}
+				List<Move> opponentBasicMoves = new List<Move>();
+				for (int i = 0; i < 8; i++)
+				{
+					for (int j = 0; j < 8; j++)
+						opponentBasicMoves.AddRange(m_board[i, j].GenerateMoves(m_playerTurn == Color.White ? Color.Black : Color.White, i, j, m_board));
+				}
 
-			int homeRow = m_playerTurn == Color.White ? 0 : 7;
-			bool isCastleQueensideThroughCheck = opponentBasicMoves.Any(x => x.To.BoardRow() == homeRow && x.To.BoardColumn() >= 1 && x.To.BoardColumn() <= 4);
-			bool isCastleKingsideThroughCheck = opponentBasicMoves.Any(x => x.To.BoardRow() == homeRow && x.To.BoardColumn() >= 4 && x.To.BoardColumn() <= 6);
+				int homeRow = m_playerTurn == Color.White ? 0 : 7;
+				bool isCastleQueensideThroughCheck = opponentBasicMoves.Any(x => x.To.BoardRow() == homeRow && x.To.BoardColumn() >= 1 && x.To.BoardColumn() <= 4);
+				bool isCastleKingsideThroughCheck = opponentBasicMoves.Any(x => x.To.BoardRow() == homeRow && x.To.BoardColumn() >= 4 && x.To.BoardColumn() <= 6);
 
-			if (m_playerTurn == Color.White && !m_whiteKingMoved)
-			{
-				if (!isCastleKingsideThroughCheck && !m_whiteKingRookMoved && !m_board[0, 5].HasPiece && !m_board[0, 6].HasPiece)
-					moves.Add(new Move(MoveType.CastleKingside));
+				if (m_playerTurn == Color.White && !m_whiteKingMoved)
+				{
+					if (!isCastleKingsideThroughCheck && !m_whiteKingRookMoved && !m_board[0, 5].HasPiece && !m_board[0, 6].HasPiece)
+						moves.Add(new Move(MoveType.CastleKingside));
 
-				if (!isCastleQueensideThroughCheck && !m_whiteQueenRookMoved && !m_board[0, 3].HasPiece && !m_board[0, 2].HasPiece && !m_board[0, 1].HasPiece)
-					moves.Add(new Move(MoveType.CastleQueenside));
-			}
+					if (!isCastleQueensideThroughCheck && !m_whiteQueenRookMoved && !m_board[0, 3].HasPiece && !m_board[0, 2].HasPiece && !m_board[0, 1].HasPiece)
+						moves.Add(new Move(MoveType.CastleQueenside));
+				}
 
-			if (m_playerTurn == Color.Black && !m_blackKingMoved)
-			{
-				if (!isCastleKingsideThroughCheck && !m_blackKingRookMoved && !m_board[7, 5].HasPiece && !m_board[7, 6].HasPiece)
-					moves.Add(new Move(MoveType.CastleKingside));
+				if (m_playerTurn == Color.Black && !m_blackKingMoved)
+				{
+					if (!isCastleKingsideThroughCheck && !m_blackKingRookMoved && !m_board[7, 5].HasPiece && !m_board[7, 6].HasPiece)
+						moves.Add(new Move(MoveType.CastleKingside));
 
-				if (!isCastleQueensideThroughCheck && !m_blackQueenRookMoved && !m_board[7, 3].HasPiece && !m_board[7, 2].HasPiece && !m_board[7, 1].HasPiece)
-					moves.Add(new Move(MoveType.CastleQueenside));
+					if (!isCastleQueensideThroughCheck && !m_blackQueenRookMoved && !m_board[7, 3].HasPiece && !m_board[7, 2].HasPiece && !m_board[7, 1].HasPiece)
+						moves.Add(new Move(MoveType.CastleQueenside));
+				}
 			}
 
 			// en passant
