@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Chess.Player.Board;
 using Chess.Player.Pieces;
 using Chess.Player.Utility;
@@ -179,21 +180,32 @@ namespace Chess.Player
 			}
 
 			// castling
+			List<Move> opponentBasicMoves = new List<Move>();
+			for (int i = 0; i < 8; i++)
+			{
+				for (int j = 0; j < 8; j++)
+					opponentBasicMoves.AddRange(m_board[i, j].GenerateMoves(m_playerTurn == Color.White ? Color.Black : Color.White, i, j, m_board));
+			}
+
+			int homeRow = m_playerTurn == Color.White ? 0 : 7;
+			bool isCastleQueensideThroughCheck = opponentBasicMoves.Any(x => x.To.BoardRow() == homeRow && x.To.BoardColumn() >= 1 && x.To.BoardColumn() <= 4);
+			bool isCastleKingsideThroughCheck = opponentBasicMoves.Any(x => x.To.BoardRow() == homeRow && x.To.BoardColumn() >= 4 && x.To.BoardColumn() <= 6);
+
 			if (m_playerTurn == Color.White && !m_whiteKingMoved)
 			{
-				if (!m_whiteKingRookMoved && !m_board[0, 5].HasPiece && !m_board[0, 6].HasPiece)
+				if (!isCastleKingsideThroughCheck && !m_whiteKingRookMoved && !m_board[0, 5].HasPiece && !m_board[0, 6].HasPiece)
 					moves.Add(new Move(MoveType.CastleKingside));
 
-				if (!m_whiteQueenRookMoved && !m_board[0, 3].HasPiece && !m_board[0, 2].HasPiece && !m_board[0, 1].HasPiece)
+				if (!isCastleQueensideThroughCheck && !m_whiteQueenRookMoved && !m_board[0, 3].HasPiece && !m_board[0, 2].HasPiece && !m_board[0, 1].HasPiece)
 					moves.Add(new Move(MoveType.CastleQueenside));
 			}
 
 			if (m_playerTurn == Color.Black && !m_blackKingMoved)
 			{
-				if (!m_blackKingRookMoved && !m_board[7, 5].HasPiece && !m_board[7, 6].HasPiece)
+				if (!isCastleKingsideThroughCheck && !m_blackKingRookMoved && !m_board[7, 5].HasPiece && !m_board[7, 6].HasPiece)
 					moves.Add(new Move(MoveType.CastleKingside));
 
-				if (!m_blackQueenRookMoved && !m_board[7, 3].HasPiece && !m_board[7, 2].HasPiece && !m_board[7, 1].HasPiece)
+				if (!isCastleQueensideThroughCheck && !m_blackQueenRookMoved && !m_board[7, 3].HasPiece && !m_board[7, 2].HasPiece && !m_board[7, 1].HasPiece)
 					moves.Add(new Move(MoveType.CastleQueenside));
 			}
 
