@@ -9,7 +9,7 @@ namespace Chess.Player
 	{
 		public Move(MoveType type, Coordinate from, Coordinate to)
 		{
-			if (MoveType != MoveType.Standard && MoveType != MoveType.EnPassant)
+			if (type != MoveType.Standard && type != MoveType.PawnStart && type != MoveType.EnPassant)
 				throw new ArgumentException("type");
 
 			m_moveType = type;
@@ -27,7 +27,7 @@ namespace Chess.Player
 
 		public Move(MoveType type)
 		{
-			if (MoveType != MoveType.CastleKingside && MoveType != MoveType.CastleQueenside)
+			if (type != MoveType.CastleKingside && type != MoveType.CastleQueenside)
 				throw new ArgumentException("type");
 
 			m_moveType = type;
