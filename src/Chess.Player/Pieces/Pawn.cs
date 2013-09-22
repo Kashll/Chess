@@ -136,14 +136,14 @@ namespace Chess.Player.Pieces
 			return moves.AsReadOnly();
 		}
 
-		private static IEnumerable<Move> GetPromotions(Coordinate from, Coordinate to)
+		private IEnumerable<Move> GetPromotions(Coordinate from, Coordinate to)
 		{
 			return new List<Move>
 			{
-				new Move(PieceType.Queen, from, to),
-				new Move(PieceType.Rook, from, to),
-				new Move(PieceType.Bishop, from, to),
-				new Move(PieceType.Knight, from, to)
+				new Move(new Queen(Color), from, to),
+				new Move(new Rook(Color), from, to),
+				new Move(new Bishop(Color), from, to),
+				new Move(new Knight(Color), from, to)
 			};
 		}
 	}

@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Board\Coordinate.cs" />
     <Compile Include="Board\File.cs" />
+    <Compile Include="GameResult.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="MoveType.cs" />

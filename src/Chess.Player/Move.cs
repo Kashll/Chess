@@ -17,7 +17,7 @@ namespace Chess.Player
 			m_to = to;
 		}
 
-		public Move(PieceType promoteTo, Coordinate from, Coordinate to)
+		public Move(Piece promoteTo, Coordinate from, Coordinate to)
 		{
 			m_moveType = MoveType.Promotion;
 			m_promoteTo = promoteTo;
@@ -48,7 +48,7 @@ namespace Chess.Player
 			get { return m_to; }
 		}
 
-		public PieceType PromoteTo
+		public Piece PromoteTo
 		{
 			get { return m_promoteTo; }
 		}
@@ -85,6 +85,6 @@ namespace Chess.Player
 		readonly MoveType m_moveType;
 		readonly Coordinate m_from;
 		readonly Coordinate m_to;
-		readonly PieceType m_promoteTo;
+		readonly Piece m_promoteTo;
 	}
 }
