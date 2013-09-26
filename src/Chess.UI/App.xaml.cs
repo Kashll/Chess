@@ -35,6 +35,7 @@ namespace Chess.UI
 		protected override void OnExit(ExitEventArgs e)
 		{
 			m_mainWindowViewModel.GameState.PropertyChanged -= GameState_PropertyChanged;
+			m_mainWindowViewModel.Dispose();
 
 			base.OnExit(e);
 		}
