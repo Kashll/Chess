@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Threading;
 using Chess.Player;
 using Chess.UI.ViewModel;
 using Utility;
@@ -28,6 +27,9 @@ namespace Chess.UI
 			mainWindow.Show();
 
 			m_mainWindowViewModel.GameState.PropertyChanged += GameState_PropertyChanged;
+
+			if (c_computerPlayerColor == Color.White)
+				MakeComputerMove();
 		}
 
 		protected override void OnExit(ExitEventArgs e)
@@ -40,16 +42,19 @@ namespace Chess.UI
 		private void GameState_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.HasChanged(GameState.PlayerTurnProperty))
+				MakeComputerMove();
+		}
+
+		private void MakeComputerMove()
+		{
+			if (m_mainWindowViewModel.GameState.GameResult == GameResult.InProgress && m_mainWindowViewModel.GameState.PlayerTurn == c_computerPlayerColor)
 			{
-				if (m_mainWindowViewModel.GameState.GameResult == GameResult.InProgress && m_mainWindowViewModel.GameState.PlayerTurn == c_computerPlayerColor)
-				{
-					ReadOnlyCollection<Move> moves = m_mainWindowViewModel.GameState.GenerateMoves();
+				ReadOnlyCollection<Move> moves = m_mainWindowViewModel.GameState.GenerateMoves();
 
-					Random random = new Random();
-					Move randomMove = moves.ElementAt(random.Next(moves.Count));
+				Random random = new Random();
+				Move randomMove = moves.ElementAt(random.Next(moves.Count));
 
-					m_mainWindowViewModel.GameState.MakeMove(randomMove);
-				}
+				m_mainWindowViewModel.GameState.MakeMove(randomMove);
 			}
 		}
 
