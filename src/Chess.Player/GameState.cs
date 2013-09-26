@@ -62,8 +62,17 @@ namespace Chess.Player
 			}
 		}
 
-		public void MakeMove(Move move)
+		public bool MakeMove(Move move)
 		{
+			bool isLegalMove = GenerateMoves().Any(x => 
+				x.MoveType == move.MoveType && 
+				x.PromoteTo == move.PromoteTo &&
+				((x.From == null && move.From == null) || (x.From != null && move.From != null && x.From.File == move.From.File && x.From.Rank == move.From.Rank)) &&
+				((x.To == null && move.To == null) || (x.To != null && move.To != null && x.To.File == move.To.File && x.To.Rank == move.To.Rank)));
+
+			if (!isLegalMove)
+				return false;
+
 			switch (move.MoveType)
 			{
 			case MoveType.Standard:
@@ -166,6 +175,7 @@ namespace Chess.Player
 
 			PlayerTurn = m_playerTurn == Color.White ? Color.Black : Color.White;
 			RaisePropertyChanged(BoardProperty);
+			return true;
 		}
 
 		public ReadOnlyCollection<Move> GenerateMoves()
