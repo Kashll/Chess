@@ -64,8 +64,8 @@ namespace Chess.Player
 
 		public bool MakeMove(Move move)
 		{
-			bool isLegalMove = GenerateMoves().Any(x => 
-				x.MoveType == move.MoveType && 
+			bool isLegalMove = GenerateMoves().Any(x =>
+				x.MoveType == move.MoveType &&
 				x.PromoteTo == move.PromoteTo &&
 				((x.From == null && move.From == null) || (x.From != null && move.From != null && x.From.File == move.From.File && x.From.Rank == move.From.Rank)) &&
 				((x.To == null && move.To == null) || (x.To != null && move.To != null && x.To.File == move.To.File && x.To.Rank == move.To.Rank)));
@@ -75,79 +75,79 @@ namespace Chess.Player
 
 			switch (move.MoveType)
 			{
-			case MoveType.Standard:
-				Piece pieceToMove = Board[move.From.BoardRow(), move.From.BoardColumn()].Piece;
-				Board[move.To.BoardRow(), move.To.BoardColumn()].Piece = Board[move.From.BoardRow(), move.From.BoardColumn()].Piece;
-				Board[move.From.BoardRow(), move.From.BoardColumn()].Piece = null;
+				case MoveType.Standard:
+					Piece pieceToMove = Board[move.From.BoardRow(), move.From.BoardColumn()].Piece;
+					Board[move.To.BoardRow(), move.To.BoardColumn()].Piece = Board[move.From.BoardRow(), move.From.BoardColumn()].Piece;
+					Board[move.From.BoardRow(), move.From.BoardColumn()].Piece = null;
 
-				if (pieceToMove.Type == PieceType.King)
-				{
-					m_whiteKingMoved |= pieceToMove.Color == Color.White;
-					m_blackKingMoved |= pieceToMove.Color == Color.Black;
-				}
-				else if (pieceToMove.Type == PieceType.Rook)
-				{
-					m_whiteQueenRookMoved |= pieceToMove.Color == Color.White && move.From.BoardRow() == 0 && move.From.BoardColumn() == 0;
-					m_whiteKingRookMoved |= pieceToMove.Color == Color.White && move.From.BoardRow() == 0 && move.From.BoardColumn() == 7;
-					m_blackQueenRookMoved |= pieceToMove.Color == Color.Black && move.From.BoardRow() == 7 && move.From.BoardColumn() == 0;
-					m_blackKingRookMoved |= pieceToMove.Color == Color.Black && move.From.BoardRow() == 7 && move.From.BoardColumn() == 7;
-				}
+					if (pieceToMove.Type == PieceType.King)
+					{
+						m_whiteKingMoved |= pieceToMove.Color == Color.White;
+						m_blackKingMoved |= pieceToMove.Color == Color.Black;
+					}
+					else if (pieceToMove.Type == PieceType.Rook)
+					{
+						m_whiteQueenRookMoved |= pieceToMove.Color == Color.White && move.From.BoardRow() == 0 && move.From.BoardColumn() == 0;
+						m_whiteKingRookMoved |= pieceToMove.Color == Color.White && move.From.BoardRow() == 0 && move.From.BoardColumn() == 7;
+						m_blackQueenRookMoved |= pieceToMove.Color == Color.Black && move.From.BoardRow() == 7 && move.From.BoardColumn() == 0;
+						m_blackKingRookMoved |= pieceToMove.Color == Color.Black && move.From.BoardRow() == 7 && move.From.BoardColumn() == 7;
+					}
 
-				break;
-			case MoveType.PawnStart:
-				m_enPassantColumn = move.From.BoardColumn();
-				Board[move.To.BoardRow(), move.To.BoardColumn()].Piece = Board[move.From.BoardRow(), move.From.BoardColumn()].Piece;
-				Board[move.From.BoardRow(), move.From.BoardColumn()].Piece = null;
-				break;
-			case MoveType.EnPassant:
-				int rowOffset = m_playerTurn == Color.White ? -1 : 1;
-				Board[move.To.BoardRow(), move.To.BoardColumn()].Piece = Board[move.From.BoardRow(), move.From.BoardColumn()].Piece;
-				Board[move.From.BoardRow(), move.From.BoardColumn()].Piece = null;
-				Board[move.To.BoardRow() + rowOffset, move.To.BoardColumn()].Piece = null;
-				break;
-			case MoveType.Promotion:
-				Board[move.To.BoardRow(), move.To.BoardColumn()].Piece = move.PromoteTo;
-				Board[move.From.BoardRow(), move.From.BoardColumn()].Piece = null;
-				break;
-			case MoveType.CastleKingside:
-				int kRow = m_playerTurn == Color.White ? 0 : 7;
-				Board[kRow, 5].Piece = Board[kRow, 7].Piece;
-				Board[kRow, 6].Piece = Board[kRow, 4].Piece;
-				Board[kRow, 4].Piece = null;
-				Board[kRow, 7].Piece = null;
+					break;
+				case MoveType.PawnStart:
+					m_enPassantColumn = move.From.BoardColumn();
+					Board[move.To.BoardRow(), move.To.BoardColumn()].Piece = Board[move.From.BoardRow(), move.From.BoardColumn()].Piece;
+					Board[move.From.BoardRow(), move.From.BoardColumn()].Piece = null;
+					break;
+				case MoveType.EnPassant:
+					int rowOffset = m_playerTurn == Color.White ? -1 : 1;
+					Board[move.To.BoardRow(), move.To.BoardColumn()].Piece = Board[move.From.BoardRow(), move.From.BoardColumn()].Piece;
+					Board[move.From.BoardRow(), move.From.BoardColumn()].Piece = null;
+					Board[move.To.BoardRow() + rowOffset, move.To.BoardColumn()].Piece = null;
+					break;
+				case MoveType.Promotion:
+					Board[move.To.BoardRow(), move.To.BoardColumn()].Piece = move.PromoteTo;
+					Board[move.From.BoardRow(), move.From.BoardColumn()].Piece = null;
+					break;
+				case MoveType.CastleKingside:
+					int kRow = m_playerTurn == Color.White ? 0 : 7;
+					Board[kRow, 5].Piece = Board[kRow, 7].Piece;
+					Board[kRow, 6].Piece = Board[kRow, 4].Piece;
+					Board[kRow, 4].Piece = null;
+					Board[kRow, 7].Piece = null;
 
-				if (m_playerTurn == Color.White)
-				{
-					m_whiteKingMoved = true;
-					m_whiteKingRookMoved = true;
-				}
-				else
-				{
-					m_blackKingMoved = true;
-					m_blackKingRookMoved = true;
-				}
-				break;
-			case MoveType.CastleQueenside:
-				int qRow = m_playerTurn == Color.White ? 0 : 7;
-				Board[qRow, 2].Piece = Board[qRow, 4].Piece;
-				Board[qRow, 3].Piece = Board[qRow, 0].Piece;
-				Board[qRow, 0].Piece = null;
-				Board[qRow, 4].Piece = null;
+					if (m_playerTurn == Color.White)
+					{
+						m_whiteKingMoved = true;
+						m_whiteKingRookMoved = true;
+					}
+					else
+					{
+						m_blackKingMoved = true;
+						m_blackKingRookMoved = true;
+					}
+					break;
+				case MoveType.CastleQueenside:
+					int qRow = m_playerTurn == Color.White ? 0 : 7;
+					Board[qRow, 2].Piece = Board[qRow, 4].Piece;
+					Board[qRow, 3].Piece = Board[qRow, 0].Piece;
+					Board[qRow, 0].Piece = null;
+					Board[qRow, 4].Piece = null;
 
-				if (m_playerTurn == Color.White)
-				{
-					m_whiteKingMoved = true;
-					m_whiteQueenRookMoved = true;
-				}
-				else
-				{
-					m_blackKingMoved = true;
-					m_blackQueenRookMoved = true;
-				}
+					if (m_playerTurn == Color.White)
+					{
+						m_whiteKingMoved = true;
+						m_whiteQueenRookMoved = true;
+					}
+					else
+					{
+						m_blackKingMoved = true;
+						m_blackQueenRookMoved = true;
+					}
 
-				break;
-			default:
-				throw new ArgumentOutOfRangeException("move");
+					break;
+				default:
+					throw new ArgumentOutOfRangeException("move");
 			}
 
 			// reset enPassant state
@@ -186,7 +186,7 @@ namespace Chess.Player
 			for (int i = 0; i < 8; i++)
 			{
 				for (int j = 0; j < 8; j++)
-					moves.AddRange(m_board[i, j].GenerateMoves(m_playerTurn, i, j, m_board));
+					moves.AddRange(m_board[i, j].GenerateMoves(m_playerTurn, m_board));
 			}
 
 			// castling
@@ -199,7 +199,7 @@ namespace Chess.Player
 				for (int i = 0; i < 8; i++)
 				{
 					for (int j = 0; j < 8; j++)
-						opponentBasicMoves.AddRange(m_board[i, j].GenerateMoves(m_playerTurn == Color.White ? Color.Black : Color.White, i, j, m_board));
+						opponentBasicMoves.AddRange(m_board[i, j].GenerateMoves(m_playerTurn == Color.White ? Color.Black : Color.White, m_board));
 				}
 
 				int homeRow = m_playerTurn == Color.White ? 0 : 7;
