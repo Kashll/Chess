@@ -3,7 +3,6 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:viewModel="clr-namespace:Chess.UI.ViewModel"
   xmlns:converters="clr-namespace:Chess.UI.Converters"
-  xmlns:board="clr-namespace:Chess.Player.Board;assembly=Chess.Player"
   Title="MainWindow" ResizeMode="CanMinimize" Height="650" Width="600">
 
 	<Window.DataContext>
@@ -11,25 +10,32 @@
 	</Window.DataContext>
 	<Window.Resources>
 		<converters:ColorConverter x:Key="ColorConverter" />
-		<converters:PieceImageConverter x:Key="PieceImageConverter" />
-		<DataTemplate DataType="{x:Type board:Square}">
-			<Grid>
-				<Rectangle Fill="{Binding Color, Converter={StaticResource ColorConverter}, Mode=OneTime}" />
-				<Image Source="{Binding ., Converter={StaticResource PieceImageConverter}}" />
-			</Grid>
-		</DataTemplate>
-	</Window.Resources>
+        <converters:PieceImageConverter x:Key="PieceImageConverter" />
+    </Window.Resources>
 
 	<StackPanel>
 		<Border BorderBrush="Black" BorderThickness="4" Width="500" Height="500">
 			<Grid>
-				<ItemsControl ItemsSource="{Binding BoardView}">
-					<ItemsControl.ItemsPanel>
+				<ListBox ItemsSource="{Binding BoardView}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+					<ListBox.ItemsPanel>
 						<ItemsPanelTemplate>
 							<UniformGrid Rows="8" Columns="8" />
 						</ItemsPanelTemplate>
-					</ItemsControl.ItemsPanel>
-				</ItemsControl>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Margin" Value="0" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Background="{Binding Color, Converter={StaticResource ColorConverter}, Mode=OneTime}">
+                                <Image Source="{Binding ., Converter={StaticResource PieceImageConverter}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>           
+				</ListBox>
 			</Grid>
 		</Border>
 
