@@ -5,22 +5,25 @@
   xmlns:converters="clr-namespace:Chess.UI.Converters"
   Title="MainWindow" ResizeMode="CanMinimize" Height="650" Width="600">
 
-	<Window.DataContext>
-		<viewModel:MainWindowViewModel/>
-	</Window.DataContext>
-	<Window.Resources>
-		<converters:ColorConverter x:Key="ColorConverter" />
+    <Window.DataContext>
+        <viewModel:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <converters:ColorConverter x:Key="ColorConverter" />
         <converters:PieceImageConverter x:Key="PieceImageConverter" />
     </Window.Resources>
 
-	<StackPanel>
-		<Border BorderBrush="Black" BorderThickness="4" Width="500" Height="500">
-			<Grid>
-				<ListBox ItemsSource="{Binding BoardView}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-					<ListBox.ItemsPanel>
-						<ItemsPanelTemplate>
-							<UniformGrid Rows="8" Columns="8" />
-						</ItemsPanelTemplate>
+    <StackPanel>
+        <Border BorderBrush="Black" BorderThickness="4" Width="500" Height="500">
+            <Grid>
+                <ListBox 
+                    ItemsSource="{Binding BoardView}" 
+                    HorizontalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="8" Columns="8" />
+                        </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
@@ -34,13 +37,13 @@
                                 <Image Source="{Binding ., Converter={StaticResource PieceImageConverter}}" />
                             </Grid>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>           
-				</ListBox>
-			</Grid>
-		</Border>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Border>
 
-		<TextBlock Margin="50,10,0,0" HorizontalAlignment="Left" Text="Enter Your Move:" />
-		<TextBox Margin="50,10,0,0" HorizontalAlignment="Left" Width="100" Height="25" Text="{Binding MoveEntry, UpdateSourceTrigger=PropertyChanged}" KeyDown="MoveEntry_OnKeyDown" />
-	</StackPanel>
+        <TextBlock Margin="50,10,0,0" HorizontalAlignment="Left" Text="Enter Your Move:" />
+        <TextBox Margin="50,10,0,0" HorizontalAlignment="Left" Width="100" Height="25" Text="{Binding MoveEntry, UpdateSourceTrigger=PropertyChanged}" KeyDown="MoveEntry_OnKeyDown" />
+    </StackPanel>
 
 </Window>
