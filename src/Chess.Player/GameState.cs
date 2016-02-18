@@ -71,7 +71,7 @@ namespace Chess.Player
 				((x.To == null && move.To == null) || (x.To != null && move.To != null && x.To.File == move.To.File && x.To.Rank == move.To.Rank)));
 
 			if (!isLegalMove)
-				return false;
+				throw new ArgumentException("illegal move");
 
 			switch (move.MoveType)
 			{
