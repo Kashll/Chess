@@ -9,7 +9,7 @@ namespace Chess.Player
 	{
 		public Move(MoveType type, Coordinate from, Coordinate to)
 		{
-			if (type != MoveType.Standard && type != MoveType.PawnStart && type != MoveType.EnPassant)
+			if (type != MoveType.Standard && type != MoveType.PawnStart && type != MoveType.EnPassant && type != MoveType.CastleKingside && type != MoveType.CastleQueenside)
 				throw new ArgumentException("type");
 
 			m_moveType = type;
@@ -23,14 +23,6 @@ namespace Chess.Player
 			m_promoteTo = promoteTo;
 			m_from = from;
 			m_to = to;
-		}
-
-		public Move(MoveType type)
-		{
-			if (type != MoveType.CastleKingside && type != MoveType.CastleQueenside)
-				throw new ArgumentException("type");
-
-			m_moveType = type;
 		}
 
 		public MoveType MoveType
@@ -51,6 +43,24 @@ namespace Chess.Player
 		public Piece PromoteTo
 		{
 			get { return m_promoteTo; }
+		}
+
+		public static Move CastleKingside(Color color)
+		{
+			if (color != Color.White && color != Color.Black)
+				throw new ArgumentException("color");
+
+			int rank = color == Color.White ? 1 : 8;
+			return new Move(MoveType.CastleKingside, new Coordinate(File.E, rank), new Coordinate(File.G, rank));
+		}
+
+		public static Move CastleQueenside(Color color)
+		{
+			if (color != Color.White && color != Color.Black)
+				throw new ArgumentException("color");
+
+			int rank = color == Color.White ? 1 : 8;
+			return new Move(MoveType.CastleQueenside, new Coordinate(File.E, rank), new Coordinate(File.C, rank));
 		}
 
 		public string ToString(Square[,] board)

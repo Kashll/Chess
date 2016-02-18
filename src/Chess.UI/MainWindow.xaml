@@ -17,8 +17,8 @@
         <Border BorderBrush="Black" BorderThickness="4" Width="500" Height="500">
             <Grid>
                 <ListBox             
-                    ItemsSource="{Binding BoardView}" 
-                    HorizontalContentAlignment="Stretch" 
+                    ItemsSource="{Binding BoardView}"
+                    HorizontalContentAlignment="Stretch"
                     VerticalContentAlignment="Stretch"
                     SelectionMode="Single"
                     DragEnter="Board_OnDragEnter">

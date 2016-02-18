@@ -87,14 +87,14 @@ namespace Chess.UI.ViewModel
 			// castle kingside
 			if (moveNotation.ToLowerInvariant() == "0-0")
 			{
-				move = new Move(MoveType.CastleKingside);
+				move = Move.CastleKingside(m_gameState.PlayerTurn);
 				return true;
 			}
 
-			// castle kingside
+			// castle queenside
 			if (moveNotation.ToLowerInvariant() == "0-0-0")
 			{
-				move = new Move(MoveType.CastleQueenside);
+				move = Move.CastleQueenside(m_gameState.PlayerTurn);
 				return true;
 			}
 
@@ -115,10 +115,8 @@ namespace Chess.UI.ViewModel
 
 		private bool TryGetUserMove(Coordinate from, Coordinate to, out Move move)
 		{
-			move = null;
 			ReadOnlyCollection<Move> possibleMoves = m_gameState.GenerateMoves();
-			move = possibleMoves.SingleOrDefault(x => x.MoveType != MoveType.CastleKingside && x.MoveType != MoveType.CastleQueenside &&
-				x.From.File == from.File && x.From.Rank == from.Rank && x.To.File == to.File && x.To.Rank == to.Rank);
+			move = possibleMoves.SingleOrDefault(x => x.From.File == from.File && x.From.Rank == from.Rank && x.To.File == to.File && x.To.Rank == to.Rank);
 
 			return move != null;
 		}

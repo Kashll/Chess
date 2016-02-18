@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Chess.Player;
 using Chess.Player.Board;
 using Chess.UI.ViewModel;
 
@@ -49,7 +48,7 @@ namespace Chess.UI
 			if (viewModel != null && destination != null && data != null)
 			{
 				Coordinate from = ((Square) data).Coordinate;
-				Coordinate to = destination.Coordinate;
+				Coordinate to = destination.Coordinate;		
 				viewModel.AttemptUserMove(from, to);
 			}
 		}

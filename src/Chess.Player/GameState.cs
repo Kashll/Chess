@@ -209,19 +209,19 @@ namespace Chess.Player
 				if (m_playerTurn == Color.White && !m_whiteKingMoved)
 				{
 					if (!isCastleKingsideThroughCheck && !m_whiteKingRookMoved && !m_board[0, 5].HasPiece && !m_board[0, 6].HasPiece)
-						moves.Add(new Move(MoveType.CastleKingside));
+						moves.Add(Move.CastleKingside(Color.White));
 
 					if (!isCastleQueensideThroughCheck && !m_whiteQueenRookMoved && !m_board[0, 3].HasPiece && !m_board[0, 2].HasPiece && !m_board[0, 1].HasPiece)
-						moves.Add(new Move(MoveType.CastleQueenside));
+						moves.Add(Move.CastleQueenside(Color.White));
 				}
 
 				if (m_playerTurn == Color.Black && !m_blackKingMoved)
 				{
 					if (!isCastleKingsideThroughCheck && !m_blackKingRookMoved && !m_board[7, 5].HasPiece && !m_board[7, 6].HasPiece)
-						moves.Add(new Move(MoveType.CastleKingside));
+						moves.Add(Move.CastleKingside(Color.Black));
 
 					if (!isCastleQueensideThroughCheck && !m_blackQueenRookMoved && !m_board[7, 3].HasPiece && !m_board[7, 2].HasPiece && !m_board[7, 1].HasPiece)
-						moves.Add(new Move(MoveType.CastleQueenside));
+						moves.Add(Move.CastleQueenside(Color.Black));
 				}
 			}
 
