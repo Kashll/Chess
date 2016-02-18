@@ -16,10 +16,12 @@
     <StackPanel>
         <Border BorderBrush="Black" BorderThickness="4" Width="500" Height="500">
             <Grid>
-                <ListBox 
+                <ListBox             
                     ItemsSource="{Binding BoardView}" 
                     HorizontalContentAlignment="Stretch" 
-                    VerticalContentAlignment="Stretch">
+                    VerticalContentAlignment="Stretch"
+                    SelectionMode="Single"
+                    DragEnter="Board_OnDragEnter">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid Rows="8" Columns="8" />
@@ -33,7 +35,12 @@
                     </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="{Binding Color, Converter={StaticResource ColorConverter}, Mode=OneTime}">
+                            <Grid 
+                                Background="{Binding Color, Converter={StaticResource ColorConverter}, Mode=OneTime}"
+                                AllowDrop="True"
+                                Drop="Board_OnDrop"
+                                MouseDown="Square_OnMouseDown">
+
                                 <Image Source="{Binding ., Converter={StaticResource PieceImageConverter}}" />
                             </Grid>
                         </DataTemplate>

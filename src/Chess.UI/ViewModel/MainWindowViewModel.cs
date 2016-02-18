@@ -58,12 +58,19 @@ namespace Chess.UI.ViewModel
 			}
 		}
 
-		public bool AttemptUserMove()
+		public bool AttemptUserMoveFromEntryHelper()
 		{
 			Move move;
 			bool isValidMoveNotation = TryGetUserMove(m_moveEntry, out move);
 
 			return isValidMoveNotation && m_gameState.MakeMove(move);
+		}
+
+		public bool AttemptUserMove(Coordinate from, Coordinate to)
+		{
+			Move move;
+			bool isValidMove = TryGetUserMove(from, to, out move);
+			return isValidMove && m_gameState.MakeMove(move);
 		}
 
 		public void Dispose()
@@ -102,8 +109,15 @@ namespace Chess.UI.ViewModel
 			if (!AlgebraicNotationUtility.TryConvertToCoordinate(moveNotation.Substring(3, 2), out to))
 				return false;
 
+			TryGetUserMove(from, to, out move);
+			return move != null;
+		}
+
+		private bool TryGetUserMove(Coordinate from, Coordinate to, out Move move)
+		{
+			move = null;
 			ReadOnlyCollection<Move> possibleMoves = m_gameState.GenerateMoves();
-			move = possibleMoves.SingleOrDefault(x => x.MoveType != MoveType.CastleKingside && x.MoveType != MoveType.CastleQueenside && 
+			move = possibleMoves.SingleOrDefault(x => x.MoveType != MoveType.CastleKingside && x.MoveType != MoveType.CastleQueenside &&
 				x.From.File == from.File && x.From.Rank == from.Rank && x.To.File == to.File && x.To.Rank == to.Rank);
 
 			return move != null;
