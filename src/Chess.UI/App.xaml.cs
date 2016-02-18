@@ -22,7 +22,6 @@ namespace Chess.UI
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			MainWindow mainWindow = new MainWindow();
-			m_mainWindowViewModel = new MainWindowViewModel();
 			m_mainWindowViewModel = (MainWindowViewModel) mainWindow.DataContext;
 			mainWindow.Show();
 
