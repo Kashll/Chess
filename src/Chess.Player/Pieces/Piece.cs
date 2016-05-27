@@ -23,7 +23,7 @@ namespace Chess.Player.Pieces
 
 	    public abstract override string ToString();
 
-		protected ReadOnlyCollection<Move> Scan(int xDirection, int yDirection, int row, int column, Square[,] board)
+		protected ReadOnlyCollection<Move> Scan(int xDirection, int yDirection, int row, int column, Square[,] board, bool onlyOnce = false)
 		{
 			List<Move> moves = new List<Move>();
 			Coordinate from = new Coordinate(column, row);
@@ -61,8 +61,8 @@ namespace Chess.Player.Pieces
 					finished = true;
 				}
 
-				// kings and knights can only move once in a given direction
-				finished |= Type == PieceType.King || Type == PieceType.Knight;
+				// if we only move one square in a given direction we're finished
+			    finished |= onlyOnce;
 			}
 
 			return moves.AsReadOnly();

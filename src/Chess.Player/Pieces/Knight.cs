@@ -16,14 +16,14 @@ namespace Chess.Player.Pieces
         public override ReadOnlyCollection<Move> GenerateMoves(int row, int column, Square[,] board)
 		{
 			List<Move> moves = new List<Move>();
-			moves.AddRange(Scan(1, 2, row, column, board));
-			moves.AddRange(Scan(2, 1, row, column, board));
-			moves.AddRange(Scan(2, -1, row, column, board));
-			moves.AddRange(Scan(1, -2, row, column, board));
-			moves.AddRange(Scan(-1, -2, row, column, board));
-			moves.AddRange(Scan(-2, -1, row, column, board));
-			moves.AddRange(Scan(-2, 1, row, column, board));
-			moves.AddRange(Scan(-1, 2, row, column, board));
+			moves.AddRange(Scan(1, 2, row, column, board, onlyOnce: true));
+			moves.AddRange(Scan(2, 1, row, column, board, onlyOnce: true));
+			moves.AddRange(Scan(2, -1, row, column, board, onlyOnce: true));
+			moves.AddRange(Scan(1, -2, row, column, board, onlyOnce: true));
+			moves.AddRange(Scan(-1, -2, row, column, board, onlyOnce: true));
+			moves.AddRange(Scan(-2, -1, row, column, board, onlyOnce: true));
+			moves.AddRange(Scan(-2, 1, row, column, board, onlyOnce: true));
+			moves.AddRange(Scan(-1, 2, row, column, board, onlyOnce: true));
 
 			return moves.AsReadOnly();
 		}

@@ -18,16 +18,16 @@ namespace Chess.Player.Pieces
 			List<Move> moves = new List<Move>();
 
 			// horizontal/vertical
-			moves.AddRange(Scan(0, 1, row, column, board));
-			moves.AddRange(Scan(1, 0, row, column, board));
-			moves.AddRange(Scan(0, -1, row, column, board));
-			moves.AddRange(Scan(-1, 0, row, column, board));
+			moves.AddRange(Scan(0, 1, row, column, board, onlyOnce: true));
+			moves.AddRange(Scan(1, 0, row, column, board, onlyOnce: true));
+			moves.AddRange(Scan(0, -1, row, column, board, onlyOnce: true));
+			moves.AddRange(Scan(-1, 0, row, column, board, onlyOnce: true));
 
 			// diagonal
-			moves.AddRange(Scan(-1, 1, row, column, board));
-			moves.AddRange(Scan(1, 1, row, column, board));
-			moves.AddRange(Scan(1, -1, row, column, board));
-			moves.AddRange(Scan(-1, -1, row, column, board));
+			moves.AddRange(Scan(-1, 1, row, column, board, onlyOnce: true));
+			moves.AddRange(Scan(1, 1, row, column, board, onlyOnce: true));
+			moves.AddRange(Scan(1, -1, row, column, board, onlyOnce: true));
+			moves.AddRange(Scan(-1, -1, row, column, board, onlyOnce: true));
 
 			return moves.AsReadOnly();
 		}
