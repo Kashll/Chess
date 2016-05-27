@@ -7,11 +7,13 @@ namespace Chess.Player.Pieces
 	public sealed class Pawn : Piece
 	{
 		public Pawn(Color color)
-			: base(color, PieceType.Pawn)
-		{
+			: base(color)
+        {
 		}
 
-		public override ReadOnlyCollection<Move> GenerateMoves(int row, int column, Square[,] board)
+        public override PieceType Type { get { return PieceType.Pawn; } }
+
+        public override ReadOnlyCollection<Move> GenerateMoves(int row, int column, Square[,] board)
 		{
 			List<Move> moves = new List<Move>();
 			Coordinate from = new Coordinate(column, row);
@@ -136,7 +138,12 @@ namespace Chess.Player.Pieces
 			return moves.AsReadOnly();
 		}
 
-		private IEnumerable<Move> GetPromotions(Coordinate from, Coordinate to)
+	    public override string ToString()
+	    {
+	        return "";
+	    }
+
+	    private IEnumerable<Move> GetPromotions(Coordinate from, Coordinate to)
 		{
 			return new List<Move>
 			{

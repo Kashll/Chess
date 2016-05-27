@@ -7,11 +7,13 @@ namespace Chess.Player.Pieces
 	public sealed class Rook : Piece
 	{
 		public Rook(Color color)
-			: base(color, PieceType.Rook)
-		{
+			: base(color)
+        {
 		}
 
-		public override ReadOnlyCollection<Move> GenerateMoves(int row, int column, Square[,] board)
+        public override PieceType Type { get { return PieceType.Rook; } }
+
+        public override ReadOnlyCollection<Move> GenerateMoves(int row, int column, Square[,] board)
 		{
 			List<Move> moves = new List<Move>();
 			moves.AddRange(Scan(0, 1, row, column, board));
@@ -21,5 +23,10 @@ namespace Chess.Player.Pieces
 
 			return moves.AsReadOnly();
 		}
+
+	    public override string ToString()
+	    {
+	        return "R";
+	    }
 	}
 }

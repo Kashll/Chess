@@ -7,10 +7,9 @@ namespace Chess.Player.Pieces
 {
 	public abstract class Piece
 	{
-		protected Piece(Color color, PieceType type)
-		{
+		protected Piece(Color color)
+        {
 			m_color = color;
-			m_type = type;
 		}
 
 		public Color Color
@@ -18,33 +17,11 @@ namespace Chess.Player.Pieces
 			get { return m_color; }
 		}
 
-		public PieceType Type
-		{
-			get { return m_type; }
-		}
+		public abstract PieceType Type { get; }
 
 		public abstract ReadOnlyCollection<Move> GenerateMoves(int row, int column, Square[,] board);
 
-		public override string ToString()
-		{
-			switch (m_type)
-			{
-			case PieceType.King:
-				return "K";
-			case PieceType.Queen:
-				return "Q";
-			case PieceType.Rook:
-				return "R";
-			case PieceType.Bishop:
-				return "B";
-			case PieceType.Knight:
-				return "N";
-			case PieceType.Pawn:
-				return "";
-			default:
-				throw new ArgumentOutOfRangeException();
-			}
-		}
+	    public abstract override string ToString();
 
 		protected ReadOnlyCollection<Move> Scan(int xDirection, int yDirection, int row, int column, Square[,] board)
 		{
@@ -85,13 +62,12 @@ namespace Chess.Player.Pieces
 				}
 
 				// kings and knights can only move once in a given direction
-				finished |= m_type == PieceType.King || m_type == PieceType.Knight;
+				finished |= Type == PieceType.King || Type == PieceType.Knight;
 			}
 
 			return moves.AsReadOnly();
 		}
 
 		readonly Color m_color;
-		readonly PieceType m_type;
 	}
 }
