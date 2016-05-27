@@ -32,7 +32,7 @@ namespace Chess.Player
 			}
 			set
 			{
-				SetPropertyField(BoardProperty, value, ref m_board);
+				SetPropertyAndField(BoardProperty, value, ref m_board);
 			}
 		}
 
@@ -45,7 +45,7 @@ namespace Chess.Player
 			}
 			set
 			{
-				SetPropertyField(PlayerTurnProperty, value, ref m_playerTurn);
+				SetPropertyAndField(PlayerTurnProperty, value, ref m_playerTurn);
 			}
 		}
 
@@ -58,7 +58,7 @@ namespace Chess.Player
 			}
 			set
 			{
-				SetPropertyField(GameResultProperty, value, ref m_gameResult);
+				SetPropertyAndField(GameResultProperty, value, ref m_gameResult);
 			}
 		}
 

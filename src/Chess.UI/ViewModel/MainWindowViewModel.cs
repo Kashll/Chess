@@ -28,7 +28,7 @@ namespace Chess.UI.ViewModel
 			}
 			set
 			{
-				SetPropertyField(BoardViewProperty, value, ref m_boardView);
+				SetPropertyAndField(BoardViewProperty, value, ref m_boardView);
 			}
 		}
 
@@ -41,7 +41,7 @@ namespace Chess.UI.ViewModel
 			}
 			set
 			{
-				SetPropertyField(GameStateProperty, value, ref m_gameState);
+				SetPropertyAndField(GameStateProperty, value, ref m_gameState);
 			}
 		}
 
@@ -54,7 +54,7 @@ namespace Chess.UI.ViewModel
 			}
 			set
 			{
-				SetPropertyField(MoveEntryProperty, value, ref m_moveEntry);
+				SetPropertyAndField(MoveEntryProperty, value, ref m_moveEntry);
 			}
 		}
 
